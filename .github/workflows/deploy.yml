@@ -12,5 +12,5 @@ jobs:
 
       - name: Deploy to nginx
         run: |
-          rsync -a --delete "${{ github.workspace }}/" /var/www/html/
+          rsync -a --delete --exclude='.git' --exclude='.github' "${{ github.workspace }}/" /var/www/html/
           systemctl reload nginx || systemctl restart nginx
