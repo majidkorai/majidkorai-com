@@ -1,0 +1,16 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to nginx
+        run: |
+          rsync -a --delete "${{ github.workspace }}/" /var/www/html/
+          systemctl reload nginx || systemctl restart nginx
